@@ -3,22 +3,12 @@
 // See README in the root project for more information.
 // -----------------------------------------------------------------------------
 
+#include "fractol.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "fractol.h"
 
-// #define WIDTH 3000
-// #define HEIGHT 2000
-
-// static mlx_image_t* image;
-
-// //-----------------------------------------------------------------------------
-
-// int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-// {
-//     return (r << 24 | g << 16 | b << 8 | a);
-// }
 
 // void ft_randomize(void* param)
 // {
@@ -87,9 +77,72 @@
 // 	return (EXIT_SUCCESS);
 // }
 
-// void    iniciar_ventanita_laura_y_fabri(t_fractal *fractal)
-// {
-// }
+
+
+int main(int argc, char **argv) {
+    t_fractal fractal;
+
+    // Comprobaciones de parámetros
+    if (argc != 2)
+	{
+        print_str("Available fractals: mandelbrot, julia\n");
+        return (1);
+    }
+    // Dados
+    if (ft_strncmp(argv[1], "mandelbrot", 10) == 0)
+        fractal.name = "mandelbrot";
+    else if (ft_strncmp(argv[1], "julia", 5) == 0)
+	{
+        // if (argc != 4)
+        //     return (1);
+        fractal.name = "julia";
+        fractal.cx =  0.4 ; //atof(argv[2]);
+        fractal.cy =  0.4; //atof(argv[3]);
+    }
+	else
+	{
+        print_str("Available fractals: mandelbrot, julia\n");
+        return (1);
+    }
+    // Inicializa tu ventana y las estructuras de datos necesarias
+    fractal.mlx = mlx_init(1500, 1500, "fractol", true);
+	fractal.size = 1500;
+	fractal.zoom = 1500;
+	fractal.max_iterations = 60;
+	fractal.offset_x = -2.0;
+	fractal.offset_y = -1.5;
+	fractal.axis_range = 3.0;
+    if (fractal.mlx == NULL)
+	{
+        print_str("Error initializing MLX\n");
+        return (1);
+    }
+    fractal.image = mlx_new_image(fractal.mlx, 1500, 1500);
+    if (fractal.image == NULL) {
+        print_str("Error creating image\n");
+        mlx_terminate(fractal.mlx);
+        return (1);
+    }
+    // Dibuja el fractal
+    draw_fractal(&fractal, fractal.name, fractal.cx, fractal.cy);
+    // Espera a que el usuario cierre la ventana
+	//handle_key(fractal.keycode);
+    mlx_loop(fractal.mlx);
+    return (0);
+}
+
+/*Cosas que hacer: 
+- colores
+-  cambio de colores hooks
+- atof
+- mouse hooks
+- zoom 
+- puntero del bonus
+
+hooks: una funcion para el teclado y otra para el raton 
+
+*/
+
 
 // int main(int argc, char **argv) {
 //     t_fractal fractal;
@@ -128,52 +181,23 @@
 //     return 0;
 // }
 
-int main(int argc, char **argv) {
-    t_fractal fractal;
+// uint32_t	get_color(int iterations, int max_iterations)
+// {
+// 	double		t;
+// 	uint32_t	color;
 
-    // Comprobaciones de parámetros
-    if (argc != 2)
-	{
-        print_str("Available fractals: mandelbrot, julia\n");
-        return (1);
-    }
-    // Dados
-    if (strcmp(argv[1], "mandelbrot") == 0)
-        fractal.name = "mandelbrot";
-    else if (strcmp(argv[1], "julia") == 0)
-	{
-        // if (argc != 4)
-        //     return (1);
-        fractal.name = "julia";
-        fractal.cx = -0.835 ; //atof(argv[2]);
-        fractal.cy = -0.2321; //atof(argv[3]);
-    }
-	else
-	{
-        print_str("Available fractals: mandelbrot, julia\n");
-        return (1);
-    }
-    // Inicializa tu ventana y las estructuras de datos necesarias
-    fractal.mlx = mlx_init(1000, 1000, "fractol", true);
-	fractal.size = 1000;
-	fractal.zoom = 1000;
-	fractal.max_iterations = 60;
-	fractal.offset_x = -2.0;
-	fractal.offset_y = -1.5;
-	fractal.axis_range = 3.0;
-    if (fractal.mlx == NULL) {
-        print_str("Error initializing MLX\n");
-        return (1);
-    }
-    fractal.image = mlx_new_image(fractal.mlx, 1000, 1000);
-    if (fractal.image == NULL) {
-        print_str("Error creating image\n");
-        mlx_terminate(fractal.mlx);
-        return (1);
-    }
-    // Dibuja el fractal
-    draw_fractal(&fractal, fractal.name, fractal.cx, fractal.cy);
-    // Espera a que el usuario cierre la ventana
-    mlx_loop(fractal.mlx);
-    return (0);
-}
+// 	t = (double)iterations / (double)max_iterations;
+// 	if (t < 0.25)
+// 		color = get_colour(205, 92, 92, 255);
+// 	else if (t < 0.5)
+// 		color = get_colour(240, 128, 128, 255);
+// 	else if (t < 0.75)
+// 		color = get_colour(250, 128, 114, 255);
+// 	else if (t < 1.0)
+// 		color = get_colour(233, 150, 122, 255);
+// 	// else if (t < 1.5)
+// 	// 	color = get_colour(255, 160, 122, 255);
+// 	else
+// 		color = get_colour(0, 0, 0, 0);
+// 	return (color);
+// }
