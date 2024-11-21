@@ -1,6 +1,18 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
-# define ESC_KEY 65307
+
+#define ESC_KEY 256
+#define LEFT_ARROW_KEY 263
+#define UP_ARROW_KEY 265
+#define RIGHT_ARROW_KEY 262
+#define DOWN_ARROW_KEY 264
+#define SIZE 1000
+#define OFFSET 0.1
+#define ZOOM 90
+#define LESS 76
+
+// Puedes agregar más letras según sea necesario
+
 
 # include <stdio.h>
 # include <unistd.h>
@@ -38,10 +50,13 @@ int	draw_fractal(t_fractal *fractal, char *query, double cx, double cy);
 int	calculate_mandelbrot(t_fractal *fractal);
 int	calculate_julia(t_fractal *fractal, double cx, double cy);
 uint32_t get_color(int iterations, int max_iterations);
-uint32_t get_colour(int32_t r, int32_t g, int32_t b, int32_t a);
+int32_t get_colour(int32_t r, int32_t g, int32_t b, int32_t a);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	print_str(char *s);
+void handle_key(int keycode, t_fractal *fractal);
 //int	handle_key(int keycode);
+// void handle_key(mlx_key_data_t keydata, void *param);
+void my_keyhook(mlx_key_data_t keydata, void* fractol_void);
 int		main();
 
 #endif

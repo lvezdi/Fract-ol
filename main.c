@@ -96,8 +96,8 @@ int main(int argc, char **argv) {
         // if (argc != 4)
         //     return (1);
         fractal.name = "julia";
-        fractal.cx =  0.4 ; //atof(argv[2]);
-        fractal.cy =  0.4; //atof(argv[3]);
+        fractal.cx =  0.285 ; //atof(argv[2]);
+        fractal.cy =  0.01; //atof(argv[3]);
     }
 	else
 	{
@@ -105,9 +105,9 @@ int main(int argc, char **argv) {
         return (1);
     }
     // Inicializa tu ventana y las estructuras de datos necesarias
-    fractal.mlx = mlx_init(1500, 1500, "fractol", true);
-	fractal.size = 1500;
-	fractal.zoom = 1500;
+    fractal.mlx = mlx_init(SIZE, SIZE, "fractol", true);
+	fractal.size = SIZE;
+	fractal.zoom = SIZE;
 	fractal.max_iterations = 60;
 	fractal.offset_x = -2.0;
 	fractal.offset_y = -1.5;
@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
         print_str("Error initializing MLX\n");
         return (1);
     }
-    fractal.image = mlx_new_image(fractal.mlx, 1500, 1500);
+    fractal.image = mlx_new_image(fractal.mlx, SIZE, SIZE);
     if (fractal.image == NULL) {
         print_str("Error creating image\n");
         mlx_terminate(fractal.mlx);
@@ -126,9 +126,11 @@ int main(int argc, char **argv) {
     // Dibuja el fractal
     draw_fractal(&fractal, fractal.name, fractal.cx, fractal.cy);
     // Espera a que el usuario cierre la ventana
-	//handle_key(fractal.keycode);
-    mlx_loop(fractal.mlx);
-    return (0);
+	// mlx_key_hook(fractal.window, handle_key, &fractal);
+	mlx_key_hook(fractal.mlx, &my_keyhook, &fractal);
+	mlx_loop(fractal.mlx);
+	mlx_terminate(fractal.mlx);
+	return (EXIT_SUCCESS);
 }
 
 /*Cosas que hacer: 

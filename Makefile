@@ -1,6 +1,6 @@
 NAME = fractol
 
-CC = gcc -g
+CC = gcc -g3 -fsanitize="address"
 
 CFLAGS = -Wall -Wextra -Werror
 

@@ -6,20 +6,35 @@
 /*   By: lvez-dia <lvez-dia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:11:32 by lvez-dia          #+#    #+#             */
-/*   Updated: 2024/11/19 21:12:36 by lvez-dia         ###   ########.fr       */
+/*   Updated: 2024/11/21 12:18:11 by lvez-dia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-// int	handle_key(int keycode)
-// {	if (keycode == 65307)
-// 		exit(1);
-// }
 
-uint32_t	get_colour(int32_t r, int32_t g, int32_t b, int32_t a)
+int32_t	get_colour(int32_t r, int32_t g, int32_t b, int32_t a)
 {
-	return (a << 24 | r << 16 | g << 8 | b);
+	return (r << 24 | g << 16 | b << 8 | a);
+}
+
+uint32_t	get_color(int iterations, int max_iterations)
+{
+	double		t;
+	uint32_t	color;
+
+	t = (double)iterations / (double)max_iterations;
+	if (t < 0.25)
+		color = get_colour(255, 182, 193, 255);
+	else if (t < 0.5)
+		color = get_colour(255, 105, 180, 255);
+	else if (t < 0.75)
+		color = get_colour(0, 0, 128, 255);
+	else if (t < 1.0)
+		color = get_colour(0, 0, 0, 0);
+	else
+		color = get_colour(255, 255, 0, 255);
+	return (color);
 }
 
 // uint32_t	get_color(int iterations, int max_iterations)
@@ -29,38 +44,19 @@ uint32_t	get_colour(int32_t r, int32_t g, int32_t b, int32_t a)
 
 // 	t = (double)iterations / (double)max_iterations;
 // 	if (t < 0.25)
-// 		color = get_colour(255, 182, 193, 255);
+// 		color = get_colour(205, 92, 92, 255);
 // 	else if (t < 0.5)
-// 		color = get_colour(255, 105, 180, 255);
+// 		color = get_colour(240, 128, 128, 255);
 // 	else if (t < 0.75)
-// 		color = get_colour(0, 0, 128, 255);
+// 		color = get_colour(250, 128, 114, 255);
 // 	else if (t < 1.0)
-// 		color = get_colour(0, 0, 0, 0);
+// 		color = get_colour(233, 150, 122, 255);
+// 	else if (t < 1.5)
+// 		color = get_colour(255, 160, 122, 255);
 // 	else
-// 		color = get_colour(255, 255, 0, 255);
+// 		color = get_colour(0, 0, 0, 255);
 // 	return (color);
 // }
-
-uint32_t	get_color(int iterations, int max_iterations)
-{
-	double		t;
-	uint32_t	color;
-
-	t = (double)iterations / (double)max_iterations;
-	if (t < 0.25)
-		color = get_colour(205, 92, 92, 255);
-	else if (t < 0.5)
-		color = get_colour(240, 128, 128, 255);
-	else if (t < 0.75)
-		color = get_colour(250, 128, 114, 255);
-	else if (t < 1.0)
-		color = get_colour(233, 150, 122, 255);
-	else if (t < 1.5)
-		color = get_colour(255, 160, 122, 255);
-	else
-		color = get_colour(0, 0, 0, 0);
-	return (color);
-}
 
 int	draw_fractal(t_fractal *fractal, char *query, double cx, double cy)
 {
@@ -107,8 +103,8 @@ int	calculate_mandelbrot(t_fractal *fractal)
 		if (fractal->zx * fractal->zx + fractal->zy * fractal->zy > 4.0)
 			break;
 	}
-	if (i == fractal->max_iterations)
-		mlx_put_pixel(fractal->image, fractal->x, fractal->y, 0x00000);
+	if (i == fractal->max_iterations + 1)
+		mlx_put_pixel(fractal->image, fractal->x, fractal->y, get_colour(0, 0, 0, 255));
 	else
 	{
 		fractal->color = get_color(i, fractal->max_iterations);
@@ -156,8 +152,47 @@ int	calculate_burning_ship(void)
 	return (0);
 }
 
-// int	handle_key(t_fractal *fractal, int keycode)
+void my_keyhook(mlx_key_data_t keydata, void* fractol_void)
+{
+	t_fractal *fractal;
+	fractal = (void *)fractol_void;
+	printf("entramo %d\n", keydata.key);
+	// If we PRESS the 'J' key, print "Hello".
+	if (keydata.key == ESC_KEY && keydata.action == MLX_PRESS)
+	{
+		exit(0);
+	}
+
+	// If we RELEASE the 'K' key, print "World".
+	if (keydata.key == LEFT_ARROW_KEY && keydata.action == MLX_PRESS)
+		fractal->offset_x -= OFFSET;
+
+	// If we HOLD the 'L' key, print "!".
+	if (keydata.key == UP_ARROW_KEY && keydata.action == MLX_PRESS)
+		fractal->offset_y -= OFFSET;
+
+	if (keydata.key == RIGHT_ARROW_KEY && keydata.action == MLX_PRESS)
+		fractal->offset_x += OFFSET;
+
+	if (keydata.key == DOWN_ARROW_KEY && keydata.action == MLX_PRESS)
+		fractal->offset_y += OFFSET;
+	if (keydata.key == ZOOM && keydata.action == MLX_PRESS)
+		fractal->zoom *= 1.05;
+	if (keydata.key == LESS && keydata.action == MLX_PRESS)
+		fractal->zoom /= 1.05;
+	draw_fractal(fractal, fractal->name, fractal->cx, fractal->cy);
+}
+
+// int32_t	main(void)
 // {
-// 	if (keycode == 65307)
-// 		exit(1);
-// } 
+// 	mlx_t* mlx;
+
+// 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
+// 		return (EXIT_FAILURE);
+
+// 	mlx_key_hook(mlx, &my_keyhook, &fractol);
+// 	mlx_loop(mlx);
+// 	mlx_terminate(mlx);
+// 	return (EXIT_SUCCESS);
+// }
+
