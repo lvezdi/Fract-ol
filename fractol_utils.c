@@ -6,7 +6,7 @@
 /*   By: lvez-dia <lvez-dia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:44:17 by lvez-dia          #+#    #+#             */
-/*   Updated: 2024/11/13 12:48:05 by lvez-dia         ###   ########.fr       */
+/*   Updated: 2024/11/28 17:19:00 by lvez-dia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
+
 int	print_str(char *s)
 {
 	int	i;
@@ -37,5 +38,15 @@ int	print_str(char *s)
 		write(1, &s[i], 1);
 		i++;
 	}
+	return (i);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
 	return (i);
 }

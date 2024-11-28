@@ -1,6 +1,6 @@
 NAME = fractol
 
-CC = gcc -g3 -fsanitize="address"
+CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
@@ -10,7 +10,7 @@ MLX42_BUILD_DIR = $(MLX42_DIR)/build
 
 RM = rm -rf
 
-SRC = main.c draw_and_calculate.c fractol_utils.c \
+SRC = main.c draw_and_calculate.c fractol_utils.c colors.c atof.c hooks.c errors.c\
 
 OBJS = $(SRC:.c=.o)
 
