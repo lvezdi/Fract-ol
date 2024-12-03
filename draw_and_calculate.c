@@ -6,7 +6,7 @@
 /*   By: lvez-dia <lvez-dia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:11:32 by lvez-dia          #+#    #+#             */
-/*   Updated: 2024/11/28 16:58:58 by lvez-dia         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:40:59 by lvez-dia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	draw_fractal(t_f *f, char *query, double cx, double cy)
 		f->y = 0;
 		while (f->y < f->size)
 		{
-			if (ft_strncmp(query, "mandelbrot", 10) == 0)
+			if (ft_strcmp(query, "mandelbrot") == 0)
 				calculate_mandelbrot(f);
-			else if (ft_strncmp(query, "julia", 5) == 0)
+			else if (ft_strcmp(query, "julia") == 0)
 				calculate_julia(f, cx, cy);
-			else if (ft_strncmp(query, "tricorn", 4) == 0)
+			else if (ft_strcmp(query, "tricorn") == 0)
 				calculate_tricorn(f);
 			else
 			{

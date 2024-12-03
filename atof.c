@@ -6,7 +6,7 @@
 /*   By: lvez-dia <lvez-dia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 13:48:49 by lvez-dia          #+#    #+#             */
-/*   Updated: 2024/11/28 16:25:49 by lvez-dia         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:34:03 by lvez-dia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ double	ft_atof(const char *str)
 	sign = 1;
 	i = 0;
 	result = 0;
-	while (str[i] == ' ' || (*str >= 9 && *str <= 13))
+	while (str[i] == ' ')
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
@@ -62,6 +62,6 @@ void	ft_init(t_f *f)
 	f->zoom = SIZE;
 	f->max_iterations = 60;
 	f->offset_x = -2.0;
-	f->offset_y = -1.5;
-	f->axis_range = 3.0;
+	f->offset_y = -2.0;
+	f->axis_range = 4.0;
 }

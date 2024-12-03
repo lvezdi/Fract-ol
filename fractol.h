@@ -6,7 +6,7 @@
 /*   By: lvez-dia <lvez-dia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:48:09 by lvez-dia          #+#    #+#             */
-/*   Updated: 2024/11/28 17:53:38 by lvez-dia         ###   ########.fr       */
+/*   Updated: 2024/12/03 12:44:49 by lvez-dia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,9 @@ int			calculate_tricorn(t_f *f);
 uint32_t	get_color(int iterations, int max_iterations);
 int32_t		get_colour(int32_t r, int32_t g, int32_t b, int32_t a);
 
-int			ft_strncmp(const char *s1, const char *s2, size_t n);
+int			ft_strcmp(const char *s1, const char *s2);
 int			print_str(char *s);
-size_t		ft_strlen(const char *s);
 
-void		handle_key(int keycode, t_f *f);
 void		keyhook(mlx_key_data_t keydata, void *fractol_void);
 void		scrollhook(double xdelta, double ydelta, void *fractol_void);
 

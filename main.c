@@ -6,22 +6,21 @@
 /*   By: lvez-dia <lvez-dia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:47:41 by lvez-dia          #+#    #+#             */
-/*   Updated: 2024/11/28 17:54:45 by lvez-dia         ###   ########.fr       */
+/*   Updated: 2024/11/28 20:13:57 by lvez-dia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include <string.h>
 
 int	main(int ar, char **argv)
 {
 	t_f	f;
 
-	if (ar == 2 && ft_strncmp(argv[1], "mandelbrot", ft_strlen(argv[1])) == 0)
+	if (ar == 2 && ft_strcmp(argv[1], "mandelbrot") == 0)
 		f.name = "mandelbrot";
-	else if (ar == 2 && ft_strncmp(argv[1], "tricorn", ft_strlen(argv[1])) == 0)
+	else if (ar == 2 && ft_strcmp(argv[1], "tricorn") == 0)
 		f.name = "tricorn";
-	else if (ar == 4 && ft_strncmp(argv[1], "julia", ft_strlen(argv[1])) == 0)
+	else if (ar == 4 && ft_strcmp(argv[1], "julia") == 0)
 		julia_argv(&f, argv);
 	else
 		return (error_available_fractals());
