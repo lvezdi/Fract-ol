@@ -6,7 +6,7 @@
    	<img src="https://img.shields.io/badge/Change_Language-English-blue" align="right"></a>
 </div>
 
-# Fractol
+# Fract-ol
 
 Los fractales son estructuras matemáticas complejas y auto-similares que se pueden encontrar en la naturaleza, como en las formas de las montañas, las líneas costeras y las ramas de los árboles. Son generados por fórmulas matemáticas repetitivas y pueden producir imágenes visualmente sorprendentes y detalladas.
 
